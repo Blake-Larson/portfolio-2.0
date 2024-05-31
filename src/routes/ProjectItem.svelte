@@ -1,8 +1,10 @@
 <script>
+  import NewTabIcon from './NewTabIcon.svelte';
   export let title = '';
   export let url = '';
   export let description = '';
   export let technologies = [''];
+  export let img = { src: '', alt: '' };
 </script>
 
 <li class="mb-12">
@@ -18,26 +20,13 @@
           href={url}
           target="_blank"
           rel="noreferrer noopener"
-          aria-label="Build a Spotify Connected App (opens in a new tab)"
+          aria-label="{title} (opens in a new tab)"
           ><span
             class="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:-inset-x-6 md:-inset-y-4 lg:block"
           ></span
           ><span
             >{title}
-            <span class="inline-block"
-              >App<svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                class="ml-1 inline-block h-4 w-4 shrink-0 translate-y-px transition-transform group-hover/link:-translate-y-1 group-hover/link:translate-x-1 group-focus-visible/link:-translate-y-1 group-focus-visible/link:translate-x-1 motion-reduce:transition-none"
-                aria-hidden="true"
-                ><path
-                  fill-rule="evenodd"
-                  d="M5.22 14.78a.75.75 0 001.06 0l7.22-7.22v5.69a.75.75 0 001.5 0v-7.5a.75.75 0 00-.75-.75h-7.5a.75.75 0 000 1.5h5.69l-7.22 7.22a.75.75 0 000 1.06z"
-                  clip-rule="evenodd"></path
-                ></svg
-              ></span
-            ></span
+            <span class="inline-block">App<NewTabIcon /></span></span
           ></a>
       </h3>
       <p class="mt-2 text-sm leading-normal">
@@ -54,17 +43,16 @@
         {/each}
       </ul>
     </div>
-    <!-- <img
-      alt="Build a Spotify Connected App Newline course marketing card"
+    <img
+      alt={img.alt}
       loading="lazy"
       width="200"
       height="48"
       decoding="async"
       data-nimg="1"
       class="rounded border-2 border-slate-200/10 transition group-hover:border-slate-200/30 sm:order-1 sm:col-span-2 sm:translate-y-1"
-      srcset="/_next/image?url=%2Fimages%2Fprojects%2Fcourse-card.png&amp;w=256&amp;q=75 1x, /_next/image?url=%2Fimages%2Fprojects%2Fcourse-card.png&amp;w=640&amp;q=75 2x"
-      src="/_next/image?url=%2Fimages%2Fprojects%2Fcourse-card.png&amp;w=640&amp;q=75"
-      style="color: transparent;" /> -->
+      src={img.src}
+      style="color: transparent;" />
   </div>
 </li>
 

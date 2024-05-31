@@ -8,23 +8,8 @@
       url: 'https://www.ageoflearning.com/',
       description:
         "Build and maintain critical components used to construct Age of Learning's frontend, across the ABCmouse and Adventure Academy products. Work closely with cross-functional teams, including developers, designers, and product managers, to implement and advocate for best practices in web development.",
-      technologies: ['JavaScript', 'TypeScript', 'Svelte', 'SvelteKit', 'PHP', 'SQL']
-    },
-    {
-      date: { start: '2021', end: '2023' },
-      title: 'Software Engineer II',
-      url: 'https://100devs.org/',
-      description:
-        "Collaborated with a team of developers to build modern and responsive web applications for 100 Devs' clients. ",
-      technologies: ['JavaScript', 'React', 'Next.js', 'Node.js', 'SQL']
-    },
-    {
-      date: { start: '2020', end: '2023' },
-      title: 'Software Engineer II',
-      url: 'https://blakelarson.dev/',
-      description:
-        'Created full-stack web applications and static websites for clients across small and medium-sized businesses to solve their unique problems. Worked closely with clients to understand their needs and deliver solutions that exceeded their expectations.',
-      technologies: ['HTML', 'CSS', 'JavaScript', 'Node.js']
+      technologies: ['JavaScript', 'TypeScript', 'Svelte', 'SvelteKit', 'PHP', 'SQL'],
+      img: { src: '', alt: 'Build a Spotify Connected App Newline course marketing card' }
     }
   ];
 </script>
@@ -44,7 +29,8 @@
           title={project.title}
           url={project.url}
           description={project.description}
-          technologies={project.technologies} />
+          technologies={project.technologies}
+          img={project.img} />
       {/each}
     </ol>
   </div>

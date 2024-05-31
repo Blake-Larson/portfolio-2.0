@@ -5,7 +5,7 @@
   <li class="shrink-0 text-xs">
     <a
       class="block hover:text-slate-200"
-      href="https://github.com/bchiang7"
+      href="https://github.com/Blake-Larson"
       target="_blank"
       rel="noreferrer noopener"
       aria-label="GitHub (opens in a new tab)"
@@ -25,7 +25,7 @@
   <li class="shrink-0 text-xs">
     <a
       class="block hover:text-slate-200"
-      href="https://www.linkedin.com/in/bchiang7/"
+      href="https://www.linkedin.com/in/blakelarson-dev"
       target="_blank"
       rel="noreferrer noopener"
       aria-label="LinkedIn (opens in a new tab)"
@@ -45,7 +45,7 @@
   <li class="shrink-0 text-xs">
     <a
       class="block hover:text-slate-200"
-      href="https://twitter.com/bchiang7"
+      href="https://twitter.com/Blakelarson_"
       target="_blank"
       rel="noreferrer noopener"
       aria-label="Twitter (opens in a new tab)"

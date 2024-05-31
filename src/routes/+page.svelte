@@ -16,7 +16,7 @@
       >Skip to Content</a>
     <div class="lg:flex lg:justify-between lg:gap-4">
       <Header />
-      <main class="pt-24 lg:w-1/2 lg:py-24">
+      <main id="content" class="pt-24 lg:w-1/2 lg:py-24">
         <About />
         <Experiences />
         <Projects />
@@ -29,5 +29,6 @@
 <style lang="postcss">
   :global(html) {
     background-color: theme(colors.slate.900);
+    scroll-behavior: smooth;
   }
 </style>
