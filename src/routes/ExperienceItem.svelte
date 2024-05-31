@@ -1,11 +1,4 @@
 <script>
-  // Experience Item
-  // Date {start: 2024, end: Present}
-  // Title	{role: "Senior Frontend Engineer, Accessibility", company: "Klaviyo"}
-  // URL {href: "https://www.klaviyo.com"}
-  // Description {"Build and maintain critical components used to construct Klaviyo’s frontend, across the whole product. Work closely with cross-functional teams, including developers, designers, and product managers, to implement and advocate for best practices in web accessibility."}
-  // Technologies {JavaScript, TypeScript, React, Storybook}
-
   export let date = { start: '', end: '' };
   export let title = { role: '', company: '' };
   export let url = '';
