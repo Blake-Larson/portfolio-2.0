@@ -5,6 +5,7 @@
   export let description = '';
   export let technologies = [''];
   export let img = { src: '', alt: '' };
+  export let date = '';
 </script>
 
 <li class="mb-12">
@@ -26,11 +27,14 @@
           ></span
           ><span
             >{title}
-            <span class="inline-block">App<NewTabIcon /></span></span
+            <span class="inline-block"><NewTabIcon /></span></span
           ></a>
       </h3>
       <p class="mt-2 text-sm leading-normal">
-        {description}
+        {@html description}
+      </p>
+      <p class="mt-2 text-sm leading-normal">
+        Deployed: {date}
       </p>
       <ul class="mt-2 flex flex-wrap" aria-label="Technologies used">
         {#each technologies as technology}
@@ -55,6 +59,3 @@
       style="color: transparent;" />
   </div>
 </li>
-
-<style>
-</style>

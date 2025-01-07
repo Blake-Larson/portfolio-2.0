@@ -3,13 +3,13 @@
 
 <footer class="max-w-md pb-16 text-sm text-slate-500 sm:pb-0">
   <p>
-    Initial design based on <a
+    Design based on <a
       href="https://brittanychiang.com/"
       class="font-medium text-slate-400 hover:text-teal-300 focus-visible:text-teal-300"
       target="_blank"
       rel="noreferrer noopener"
       aria-label="Brittany Chiang (opens in a new tab)">Brittany Chiang's</a>
-    exceptional website. Coded in
+    exceptional portfolio. Coded in
     <a
       href="https://code.visualstudio.com/"
       class="font-medium text-slate-400 hover:text-teal-300 focus-visible:text-teal-300"

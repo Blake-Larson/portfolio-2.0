@@ -8,7 +8,7 @@
       title: { role: 'Software Engineer II', company: 'Age of Learning' },
       url: 'https://www.ageoflearning.com/',
       description:
-        "Build and maintain critical components used to construct Age of Learning's frontend, across ABCmouse and other products. Work closely with cross-functional teams, including developers, designers, and product managers, to implement and advocate for best practices in web development.",
+        "Build and maintain critical components for Age of Learning's frontend across the ABCmouse and Adventure Academy products. Work closely with cross-functional teams, including developers, designers, and product managers, to implement and advocate for best practices in web development.",
       technologies: ['JavaScript', 'TypeScript', 'Svelte', 'SvelteKit', 'PHP', 'SQL']
     },
     {

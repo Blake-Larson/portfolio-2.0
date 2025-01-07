@@ -11,17 +11,26 @@
   </div>
   <div>
     <p class="mb-4">
-      As a music teacher running a private studio during the pandemic, I found myself in a tough
-      place. I decided to try my hand at my life-long love of applications by creating a tool for my
-      business. I fell into the rabbit hole of coding and web development and found my new outlet
-      for creating. Fast-forward to today, and I've had the privilege of building software for an
+      I'm a developer focused on crafting robust user experiences through clean, maintainable code.
+      My passion lies in creating modern, inspiring interfaces backed by thoughtfully engineered
+      systems that empower developers to work efficiently and confidently.
+    </p>
+    <p class="mb-4">
+      Currently, I spend most of my time working on the frontend for <a
+        class="font-medium text-slate-200 hover:text-teal-300 focus-visible:text-teal-300"
+        href="https://www.abcmouse.com/abc/"
+        target="_blank"
+        rel="noreferrer noopener"
+        aria-label="education tech company (opens in a new tab)">ABCmouse</a>
+      and other
       <a
         class="font-medium text-slate-200 hover:text-teal-300 focus-visible:text-teal-300"
         href="https://www.ageoflearning.com/"
         target="_blank"
         rel="noreferrer noopener"
-        aria-label="education tech company (opens in a new tab)">education tech company</a
-      >, an
+        aria-label="education tech company (opens in a new tab)">Age of Learning</a>
+      products. I've also had the privilege of building software for an
+
       <a
         class="font-medium text-slate-200 hover:text-teal-300 focus-visible:text-teal-300"
         href="https://100devs.org/"
@@ -29,21 +38,8 @@
         rel="noreferrer noopener"
         aria-label="agency that trains developers (opens in a new tab)"
         >agency that trains developers</a
-      >, and <!-- -->
-      <a
-        class="font-medium text-slate-200 hover:text-teal-300 focus-visible:text-teal-300"
-        href="https://blakelarson.dev/"
-        target="_blank"
-        rel="noreferrer noopener"
-        aria-label="clients that run small businesses (opens in a new tab)"
-        >clients that run small businesses</a
-      >.
-    </p>
-    <p class="mb-4">
-      Currently, I spend most of my time working on the websites for ABCmouse and other Age of
-      Learning products. I most enjoy building software in for front end user experiences — things
-      that look good but are also built well under the hood. I love to learn and am always looking
-      for new opportunities to grow as a developer.
+      >, and clients that run small businesses. I love to learn and am always looking for new
+      opportunities to grow as a developer.
     </p>
     <p>
       When I'm not at the computer, I'm usually doing something outside like hiking, playing disc

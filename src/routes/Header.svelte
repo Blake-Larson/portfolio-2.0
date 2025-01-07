@@ -11,7 +11,7 @@
       Software Engineer
     </h2>
     <p class="mt-4 max-w-xs leading-normal">
-      I build pixel-perfect, engaging, and accessible digital experiences.
+      I build modern digital experiences backed by robust engineering systems.
     </p>
     <Nav />
   </div>
