@@ -11,7 +11,6 @@
   </div>
   <div>
     <p class="mb-4">
-      I'm a developer focused on crafting robust user experiences through clean, maintainable code.
       My passion lies in creating modern, inspiring interfaces backed by thoughtfully engineered
       systems that empower developers to work efficiently and confidently.
     </p>
