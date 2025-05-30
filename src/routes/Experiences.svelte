@@ -8,8 +8,8 @@
       title: { role: 'Software Engineer II', company: 'Age of Learning' },
       url: 'https://www.ageoflearning.com/',
       description:
-        "Build and maintain critical components for Age of Learning's frontend across the ABCmouse and Adventure Academy products. Work closely with cross-functional teams, including developers, designers, and product managers, to implement and advocate for best practices in web development.",
-      technologies: ['JavaScript', 'TypeScript', 'Svelte', 'SvelteKit', 'PHP', 'SQL']
+        "Lead projects like Apple Pay implementation using a stores/actions architecture, and custom payment processing packages. Build and maintain critical components for Age of Learning's frontend across the ABCmouse and Adventure Academy products. Work closely with cross-functional teams, including developers, designers, and product managers, to implement and advocate for best practices in web development.",
+      technologies: ['JavaScript', 'TypeScript', 'Svelte', 'SvelteKit', 'SQL', 'Dart', 'Flutter']
     },
     {
       date: { start: '2021', end: '2023' },
