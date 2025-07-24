@@ -1,10 +1,10 @@
 <script>
   import NewTabIcon from './NewTabIcon.svelte';
   export let title = '';
-  export let url = '';
+  export let slug = '';
   export let description = '';
   export let technologies = [''];
-  export let img = { src: '', alt: '' };
+  export let img = { src: '', alt: '', type: 'image' };
   export let date = '';
 </script>
 
@@ -18,10 +18,8 @@
       <h3>
         <a
           class="group/link inline-flex items-baseline text-base font-medium leading-tight text-slate-200 hover:text-teal-300 focus-visible:text-teal-300"
-          href={url}
-          target="_blank"
-          rel="noreferrer noopener"
-          aria-label="{title} (opens in a new tab)"
+          href={`/projects/${slug}`}
+          aria-label={title}
           ><span
             class="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:-inset-x-6 md:-inset-y-4 lg:block"
           ></span
@@ -47,15 +45,29 @@
         {/each}
       </ul>
     </div>
-    <img
-      alt={img.alt}
-      loading="lazy"
-      width="200"
-      height="48"
-      decoding="async"
-      data-nimg="1"
-      class="rounded border-2 border-slate-200/10 transition group-hover:border-slate-200/30 sm:order-1 sm:col-span-2 sm:translate-y-1"
-      src={img.src}
-      style="color: transparent;" />
+    {#if img.type === 'video'}
+      <video
+        autoplay
+        loop
+        muted
+        playsinline
+        class="rounded border-2 border-slate-200/10 transition group-hover:border-slate-200/30 sm:order-1 sm:col-span-2 sm:translate-y-1"
+        style="color: transparent;">
+        <source src={img.src} type="video/webm" />
+        <source src={img.src} type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    {:else}
+      <img
+        alt={img.alt}
+        loading="lazy"
+        width="200"
+        height="48"
+        decoding="async"
+        data-nimg="1"
+        class="w-full rounded border-2 border-slate-200/10 transition group-hover:border-slate-200/30 sm:order-1 sm:col-span-2 sm:translate-y-1"
+        src={img.src}
+        style="color: transparent;" />
+    {/if}
   </div>
 </li>
