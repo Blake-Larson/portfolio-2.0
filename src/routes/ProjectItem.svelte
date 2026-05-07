@@ -57,7 +57,7 @@
         <source src={img.src} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
-    {:else}
+    {:else if img.type === 'image'}
       <img
         alt={img.alt}
         loading="lazy"
@@ -68,6 +68,32 @@
         class="w-full rounded border-2 border-slate-200/10 transition group-hover:border-slate-200/30 sm:order-1 sm:col-span-2 sm:translate-y-1"
         src={img.src}
         style="color: transparent;" />
+    {:else}
+      <div
+        class="relative overflow-hidden rounded border-2 border-slate-200/10 bg-slate-800/40 p-3 transition group-hover:border-slate-200/30 sm:order-1 sm:col-span-2 sm:translate-y-1 h-[8rem]">
+        <div class="space-y-2">
+          <div class="h-2 w-3/4 rounded bg-slate-700/60"></div>
+          <div class="h-2 w-full rounded bg-slate-700/60"></div>
+          <div class="h-2 w-5/6 rounded bg-slate-700/60"></div>
+        </div>
+        <div
+          class="absolute inset-0 flex flex-col items-center justify-center gap-1.5 bg-slate-900/75 backdrop-blur-sm">
+          <svg
+            class="h-5 w-5 animate-spin text-teal-300"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"
+            ></circle>
+            <path
+              class="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.568 3 7.197l3-2.906z"
+            ></path>
+          </svg>
+          <span class="text-xs text-slate-400">Loading...</span>
+        </div>
+      </div>
     {/if}
   </div>
 </li>

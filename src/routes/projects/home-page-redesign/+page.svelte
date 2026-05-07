@@ -1,3 +1,38 @@
+<script lang="ts">
+  import projects from '$lib/projects-config.js';
+
+  const project = projects.find((p: { slug: string }) => p.slug === 'home-page-redesign');
+</script>
+
+<svelte:head>
+  <title>{project?.title} | Blake Larson</title>
+  <meta name="description" content={project?.description} />
+</svelte:head>
+
+<div class="mb-12">
+  <div class="relative mb-8 w-full overflow-hidden rounded-lg border-4 border-slate-200/10">
+    <video class="h-full w-full" autoplay loop muted playsinline controls>
+      <source src={project?.img.src} type="video/quicktime" />
+      <source src={project?.img.src} type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+  </div>
+
+  <h1 class="mb-4 text-3xl font-bold text-slate-200">{project?.title}</h1>
+  <p class="text-base text-slate-400">{@html project?.description}</p>
+
+  <ul class="mt-4 flex flex-wrap" aria-label="Technologies used">
+    {#each project?.technologies ?? [] as technology}
+      <li class="mr-1.5 mt-2">
+        <div
+          class="flex items-center rounded-full bg-teal-400/10 px-3 py-1 text-xs font-medium leading-5 text-teal-300">
+          {technology}
+        </div>
+      </li>
+    {/each}
+  </ul>
+</div>
+
 <div class="space-y-16 md:space-y-24">
   <!-- Image System Section -->
   <div class="flex flex-col gap-8 md:gap-12">
@@ -32,8 +67,7 @@
     </div>
     <div class="flex-1">
       <pre class="overflow-x-auto rounded-lg bg-slate-800/50 p-4 text-sm text-slate-300">
-<code
-          >{`// Here are a few selections from the codebase that demonstrate the image optimization service:
+<code>{`// Here are a few selections from the codebase that demonstrate the image optimization service:
 
 // Example of the WebP conversion function	
 /**
@@ -161,8 +195,7 @@
       </ul>
     </div>
     <pre class="flex-1 overflow-x-auto rounded-lg bg-slate-800/50 p-4 text-sm text-slate-300">
-            <code
-        >{`
+            <code>{`
 // Example of the JSON config
 const config = {
 	header: {
@@ -173,8 +206,7 @@ const config = {
 	}
 };`}</code></pre>
     <pre class="flex-1 overflow-x-auto rounded-lg bg-slate-800/50 p-4 text-sm text-slate-300">
-                <code
-        >{`
+                <code>{`
 // Type definition for the configuration object
 /**
  * @typedef {object} HomePageConfiguration
@@ -208,7 +240,7 @@ const config = {
         <div>
           <h3 class="text-md ml-2 font-semibold text-slate-200">Give it a role:</h3>
           <p>
-            Give the AI a persona like “system architect” or “principal engineer,” particularly at
+            Give the AI a persona like "system architect" or "principal engineer," particularly at
             the planning stage, to pack in the right context with minimal effort.
           </p>
         </div>
@@ -223,7 +255,7 @@ const config = {
           <h3 class="text-md ml-2 font-semibold text-slate-200">Multiple approaches:</h3>
           <p>
             When faced with a bug or feature with an ambiguous solution, ask for multiple
-            approaches. This ensures it doesn’t go down an invalid rabbit hole and lets you be the
+            approaches. This ensures it doesn't go down an invalid rabbit hole and lets you be the
             decision maker of which route to explore more.
           </p>
         </div>

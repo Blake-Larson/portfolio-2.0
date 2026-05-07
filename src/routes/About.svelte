@@ -41,9 +41,9 @@
       opportunities to grow as a developer.
     </p>
     <p>
-      When I'm not at the computer, I'm usually doing something outside like hiking, playing disc
-      golf, or camping. I also spend my time hanging out with my wife and dog, woodworking, baking
-      bread, singing, or playing a new video game.
+      When I'm not at the computer, I'm usually exploring the great outdoors or playing disc golf. I
+      also enjoy woodworking, quartet singing, diving into science fiction and fantasy novels, and
+      gardening with my wife.
     </p>
   </div>
 </section>

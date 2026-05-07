@@ -11,7 +11,8 @@
       Software Engineer
     </h2>
     <p class="mt-4 max-w-xs leading-normal">
-      I build modern digital experiences backed by robust engineering systems.
+      I specialize in frontend systems and API integration — connecting complex backend services,
+      payment processors, and native apps to polished, production-grade user experiences.
     </p>
     <Nav />
   </div>
