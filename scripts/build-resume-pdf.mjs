@@ -3,7 +3,6 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import fs from 'node:fs/promises';
 import { existsSync } from 'node:fs';
-import puppeteer from 'puppeteer-core';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
@@ -93,7 +92,19 @@ async function resolveChromePath() {
 	});
 }
 
+async function loadPuppeteer() {
+	try {
+		const module = await import('puppeteer-core');
+		return module.default;
+	} catch {
+		throw new Error(
+			'puppeteer-core is required for PDF export. Install it locally with: npm install -D puppeteer-core'
+		);
+	}
+}
+
 async function launchBrowser() {
+	const puppeteer = await loadPuppeteer();
 	const executablePath = await resolveChromePath();
 	return puppeteer.launch({ headless: true, executablePath });
 }
