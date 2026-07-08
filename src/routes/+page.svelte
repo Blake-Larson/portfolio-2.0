@@ -6,7 +6,7 @@
   import Projects from './Projects.svelte';
 </script>
 
-<body
+<div
   class="bg-slate-900 leading-relaxed text-slate-400 antialiased selection:bg-teal-300 selection:text-teal-900">
   <div class="mx-auto min-h-screen max-w-screen-xl px-6 font-sans md:px-12 lg:px-24">
     <a
@@ -23,4 +23,4 @@
       </main>
     </div>
   </div>
-</body>
+</div>

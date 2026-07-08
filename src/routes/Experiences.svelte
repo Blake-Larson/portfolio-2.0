@@ -59,16 +59,21 @@
           technologies={experience.technologies} />
       {/each}
     </ol>
-    <div class="mt-12">
+    <div class="mt-12 flex flex-wrap items-baseline gap-x-6 gap-y-2">
       <a
         class="group/link inline-flex items-baseline text-base font-semibold leading-tight text-slate-200 hover:text-teal-300 focus-visible:text-teal-300"
+        href="/resume"
+        aria-label="View Full Résumé"
+        ><span>View Full Résumé</span></a>
+      <a
+        class="group/link inline-flex items-baseline text-sm font-medium leading-tight text-slate-400 hover:text-teal-300 focus-visible:text-teal-300"
         href="/documents/blake-larson-resume.pdf"
         target="_blank"
         rel="noreferrer noopener"
-        aria-label="View Full Résumé (opens in a new tab)"
+        aria-label="Download Résumé PDF (opens in a new tab)"
         ><span
-          >View Full<!-- -->
-          <span class="inline-block">Résumé <NewTabIcon /></span></span
+          >Download PDF<!-- -->
+          <span class="inline-block"><NewTabIcon /></span></span
         ></a>
     </div>
   </div>
