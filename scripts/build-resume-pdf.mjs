@@ -1,5 +1,5 @@
 import { spawn, execFileSync } from 'node:child_process';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import path from 'node:path';
 import fs from 'node:fs/promises';
 import { existsSync } from 'node:fs';
@@ -9,13 +9,36 @@ const root = path.resolve(__dirname, '..');
 const port = 4173;
 
 function parseVariant(argv) {
-	const index = argv.indexOf('--variant');
-	if (index === -1) return null;
-	const value = argv[index + 1];
-	if (!value || value.startsWith('--')) {
-		throw new Error('Missing value for --variant. Usage: npm run resume:pdf -- --variant <name>');
+	if (process.env.RESUME_VARIANT) {
+		return process.env.RESUME_VARIANT;
 	}
-	return value;
+
+	for (const arg of argv) {
+		if (arg.startsWith('--variant=')) {
+			const value = arg.slice('--variant='.length);
+			if (value) return value;
+			throw new Error('Missing value for --variant. Usage: npm run resume:pdf -- --variant <name>');
+		}
+	}
+
+	const index = argv.indexOf('--variant');
+	if (index !== -1) {
+		const value = argv[index + 1];
+		if (!value || value.startsWith('--')) {
+			throw new Error('Missing value for --variant. Usage: npm run resume:pdf -- --variant <name>');
+		}
+		return value;
+	}
+
+	const positional = argv.filter((arg) => !arg.startsWith('--'));
+	if (positional.length === 1) {
+		console.warn(
+			`Using variant "${positional[0]}" from positional argument. Prefer: npm run resume:pdf -- --variant ${positional[0]}`
+		);
+		return positional[0];
+	}
+
+	return null;
 }
 
 const variant = parseVariant(process.argv.slice(2));
@@ -64,6 +87,31 @@ async function waitForServer(url, timeoutMs = 30000) {
 	throw new Error(`Timed out waiting for ${url}`);
 }
 
+async function loadExpectedSummary() {
+	const modulePath = variant
+		? path.join(root, 'src/lib/resumes', variant, 'resume-data.js')
+		: path.join(root, 'src/lib/resume-data.js');
+	const module = await import(pathToFileURL(modulePath).href);
+	return module.contact.summary;
+}
+
+async function verifyResumePage(url) {
+	const expectedSummary = await loadExpectedSummary();
+	const response = await fetch(url);
+
+	if (!response.ok) {
+		throw new Error(`Resume page returned ${response.status} for ${url}`);
+	}
+
+	const html = await response.text();
+	const snippet = expectedSummary.slice(0, 48);
+	if (!html.includes(snippet)) {
+		throw new Error(
+			`Resume page at ${url} did not include expected content for variant "${variant ?? 'default'}". Check that the preview server loaded the correct data.`
+		);
+	}
+}
+
 const SYSTEM_CHROME_PATHS = {
 	darwin: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
 	linux: '/usr/bin/google-chrome',
@@ -92,6 +140,7 @@ function generatePdf(chromePath, url, pdfPath) {
 			'--no-default-browser-check',
 			'--disable-dev-shm-usage',
 			'--run-all-compositor-stages-before-draw',
+			'--virtual-time-budget=5000',
 			`--print-to-pdf=${pdfPath}`,
 			'--no-pdf-header-footer',
 			url
@@ -109,7 +158,12 @@ async function main() {
 
 	if (variant) {
 		console.log(`Using resume variant: ${variant}`);
+	} else {
+		console.log('Using default resume (no variant)');
 	}
+
+	console.log(`Resume URL: ${resumeUrl}`);
+	console.log(`Output path: ${outputPath}`);
 
 	console.log('Building site...');
 	await run('npm', ['run', 'build']);
@@ -123,6 +177,7 @@ async function main() {
 
 	try {
 		await waitForServer(resumeUrl);
+		await verifyResumePage(resumeUrl);
 
 		console.log('Generating PDF...');
 		await fs.mkdir(path.dirname(outputPath), { recursive: true });
