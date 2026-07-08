@@ -1,20 +1,20 @@
-import { existsSync } from 'node:fs';
-import path from 'node:path';
-import { pathToFileURL } from 'node:url';
 import * as defaultData from './resume-data.js';
 
-const root = process.cwd();
+/** @typedef {typeof defaultData} ResumeDataModule */
 
-/** @param {string | null} variant */
+const variantModules = import.meta.glob('./resumes/*/resume-data.js');
+
+/** @param {string | null | undefined} variant @returns {Promise<ResumeDataModule | null>} */
 export async function loadResumeData(variant) {
 	if (!variant) {
 		return defaultData;
 	}
 
-	const variantPath = path.join(root, 'resumes', variant, 'resume-data.js');
-	if (!existsSync(variantPath)) {
+	const modulePath = `./resumes/${variant}/resume-data.js`;
+	const loader = variantModules[modulePath];
+	if (!loader) {
 		return null;
 	}
 
-	return import(pathToFileURL(variantPath).href);
+	return /** @type {Promise<ResumeDataModule>} */ (loader());
 }

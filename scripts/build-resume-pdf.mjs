@@ -28,7 +28,7 @@ const outputPath = variant
 	: path.join(root, 'static/documents/blake-larson-resume.pdf');
 
 const variantDataPath = variant
-	? path.join(root, `resumes/${variant}/resume-data.js`)
+	? path.join(root, 'src/lib/resumes', variant, 'resume-data.js')
 	: null;
 
 function run(command, args, options = {}) {
@@ -101,7 +101,7 @@ async function launchBrowser() {
 async function main() {
 	if (variantDataPath && !existsSync(variantDataPath)) {
 		throw new Error(
-			`Resume variant "${variant}" not found at ${variantDataPath}. Create resumes/${variant}/resume-data.js first.`
+			`Resume variant "${variant}" not found at ${variantDataPath}. Create src/lib/resumes/${variant}/resume-data.js first.`
 		);
 	}
 

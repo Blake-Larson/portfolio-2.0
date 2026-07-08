@@ -10,6 +10,10 @@ export async function load({ url }) {
 		error(404, `Resume variant "${variant}" not found`);
 	}
 
+	if (!resumeData) {
+		error(500, 'Resume data unavailable');
+	}
+
 	return {
 		contact: resumeData.contact,
 		selectedProject: resumeData.selectedProject,

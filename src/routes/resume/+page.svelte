@@ -1,6 +1,7 @@
-<script>
-  /** @type {import('./$types').PageData} */
-  export let data;
+<script lang="ts">
+  import type { PageData } from './$types';
+
+  export let data: PageData;
 
   const { contact, selectedProject, experiences, skills, education, interests } = data;
 </script>
