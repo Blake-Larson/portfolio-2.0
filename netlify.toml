@@ -1,2 +1,2 @@
 [build.environment]
-  PUPPETEER_SKIP_DOWNLOAD = "true"
+  NODE_VERSION = "22"

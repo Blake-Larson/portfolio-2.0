@@ -1,12 +1,8 @@
 <script>
-  import {
-    contact,
-    selectedProject,
-    experiences,
-    skills,
-    education,
-    interests
-  } from '$lib/resume-data.js';
+  /** @type {import('./$types').PageData} */
+  export let data;
+
+  const { contact, selectedProject, experiences, skills, education, interests } = data;
 </script>
 
 <svelte:head>

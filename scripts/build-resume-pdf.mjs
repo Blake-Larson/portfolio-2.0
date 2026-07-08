@@ -3,13 +3,33 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import fs from 'node:fs/promises';
 import { existsSync } from 'node:fs';
-import puppeteer from 'puppeteer';
+import puppeteer from 'puppeteer-core';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
 const port = 4173;
-const resumeUrl = `http://localhost:${port}/resume`;
-const outputPath = path.join(root, 'static/documents/blake-larson-resume.pdf');
+
+function parseVariant(argv) {
+	const index = argv.indexOf('--variant');
+	if (index === -1) return null;
+	const value = argv[index + 1];
+	if (!value || value.startsWith('--')) {
+		throw new Error('Missing value for --variant. Usage: npm run resume:pdf -- --variant <name>');
+	}
+	return value;
+}
+
+const variant = parseVariant(process.argv.slice(2));
+const resumeUrl = variant
+	? `http://localhost:${port}/resume?variant=${encodeURIComponent(variant)}`
+	: `http://localhost:${port}/resume`;
+const outputPath = variant
+	? path.join(root, `resumes/${variant}/blake-larson-resume-${variant}.pdf`)
+	: path.join(root, 'static/documents/blake-larson-resume.pdf');
+
+const variantDataPath = variant
+	? path.join(root, `resumes/${variant}/resume-data.js`)
+	: null;
 
 function run(command, args, options = {}) {
 	return new Promise((resolve, reject) => {
@@ -52,26 +72,25 @@ const SYSTEM_CHROME_PATHS = {
 };
 
 async function resolveChromePath() {
-	try {
-		const bundledPath = puppeteer.executablePath();
-		if (existsSync(bundledPath)) return bundledPath;
-	} catch {
-		// Bundled Chrome not installed yet.
-	}
-
 	const systemPath = SYSTEM_CHROME_PATHS[process.platform];
 	if (systemPath && existsSync(systemPath)) {
 		console.log(`Using system Chrome at ${systemPath}`);
 		return systemPath;
 	}
 
-	console.log('Installing Puppeteer Chrome (one-time setup)...');
-	execFileSync('npx', ['puppeteer', 'browsers', 'install', 'chrome'], {
+	console.log('Installing Chrome for Testing (one-time setup)...');
+	execFileSync('npx', ['--yes', '@puppeteer/browsers', 'install', 'chrome@stable'], {
 		cwd: root,
 		stdio: 'inherit'
 	});
 
-	return puppeteer.executablePath();
+	const { computeExecutablePath, Browser, resolveBuildId } = await import('@puppeteer/browsers');
+	const buildId = await resolveBuildId(Browser.CHROME, 'stable');
+
+	return computeExecutablePath({
+		browser: Browser.CHROME,
+		buildId
+	});
 }
 
 async function launchBrowser() {
@@ -80,6 +99,16 @@ async function launchBrowser() {
 }
 
 async function main() {
+	if (variantDataPath && !existsSync(variantDataPath)) {
+		throw new Error(
+			`Resume variant "${variant}" not found at ${variantDataPath}. Create resumes/${variant}/resume-data.js first.`
+		);
+	}
+
+	if (variant) {
+		console.log(`Using resume variant: ${variant}`);
+	}
+
 	console.log('Building site...');
 	await run('npm', ['run', 'build']);
 
@@ -107,6 +136,7 @@ async function main() {
 		});
 
 		await browser.close();
+		await fs.mkdir(path.dirname(outputPath), { recursive: true });
 		await fs.writeFile(outputPath, pdf);
 		console.log(`Wrote ${outputPath}`);
 	} finally {
