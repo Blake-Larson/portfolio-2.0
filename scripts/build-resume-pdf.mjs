@@ -70,43 +70,34 @@ const SYSTEM_CHROME_PATHS = {
 	win32: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
 };
 
-async function resolveChromePath() {
+function resolveChromePath() {
 	const systemPath = SYSTEM_CHROME_PATHS[process.platform];
 	if (systemPath && existsSync(systemPath)) {
-		console.log(`Using system Chrome at ${systemPath}`);
+		console.log(`Using Chrome at ${systemPath}`);
 		return systemPath;
 	}
 
-	console.log('Installing Chrome for Testing (one-time setup)...');
-	execFileSync('npx', ['--yes', '@puppeteer/browsers', 'install', 'chrome@stable'], {
-		cwd: root,
-		stdio: 'inherit'
-	});
-
-	const { computeExecutablePath, Browser, resolveBuildId } = await import('@puppeteer/browsers');
-	const buildId = await resolveBuildId(Browser.CHROME, 'stable');
-
-	return computeExecutablePath({
-		browser: Browser.CHROME,
-		buildId
-	});
+	throw new Error(
+		'Google Chrome is required for PDF export. Install Chrome, then rerun npm run resume:pdf.'
+	);
 }
 
-async function loadPuppeteer() {
-	try {
-		const module = await import('puppeteer-core');
-		return module.default;
-	} catch {
-		throw new Error(
-			'puppeteer-core is required for PDF export. Install it locally with: npm install -D puppeteer-core'
-		);
-	}
-}
-
-async function launchBrowser() {
-	const puppeteer = await loadPuppeteer();
-	const executablePath = await resolveChromePath();
-	return puppeteer.launch({ headless: true, executablePath });
+function generatePdf(chromePath, url, pdfPath) {
+	execFileSync(
+		chromePath,
+		[
+			'--headless=new',
+			'--disable-gpu',
+			'--no-first-run',
+			'--no-default-browser-check',
+			'--disable-dev-shm-usage',
+			'--run-all-compositor-stages-before-draw',
+			`--print-to-pdf=${pdfPath}`,
+			'--no-pdf-header-footer',
+			url
+		],
+		{ stdio: 'inherit' }
+	);
 }
 
 async function main() {
@@ -134,21 +125,8 @@ async function main() {
 		await waitForServer(resumeUrl);
 
 		console.log('Generating PDF...');
-		const browser = await launchBrowser();
-		const page = await browser.newPage();
-		await page.goto(resumeUrl, { waitUntil: 'networkidle0' });
-		await page.emulateMediaType('print');
-
-		const pdf = await page.pdf({
-			format: 'letter',
-			printBackground: true,
-			margin: { top: '0.4in', right: '0.45in', bottom: '0.4in', left: '0.45in' },
-			scale: 0.96
-		});
-
-		await browser.close();
 		await fs.mkdir(path.dirname(outputPath), { recursive: true });
-		await fs.writeFile(outputPath, pdf);
+		generatePdf(resolveChromePath(), resumeUrl, outputPath);
 		console.log(`Wrote ${outputPath}`);
 	} finally {
 		preview.kill('SIGTERM');
