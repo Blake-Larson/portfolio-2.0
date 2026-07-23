@@ -51,22 +51,23 @@
     <div class="flex-1">
       <h3 class="mb-4 text-xl font-semibold text-slate-200">Child Progress Report</h3>
       <p class="text-base text-slate-400">
-        Built the per-child progress experience parents use to understand learning activity —
-        lifetime and last-7-day stats, a recent-activity feed, and a reading/math learning path with
-        unit and lesson progress. Designed dedicated skeleton, empty, and error states so the page
-        stays clear while data loads or when a child has no activity yet.
+        Owned the progress report end to end — the Parent Center UI and the PHP service-layer
+        endpoints that power it. Assembled lifetime and period completion stats, a recent-activity
+        feed, and per-category learning-path progress (units, lessons, current/next unit). On the
+        client, designed skeleton, empty, and error states so the page stays clear while data loads
+        or when a child has no activity yet.
       </p>
       <ul class="mt-4 flex flex-wrap" aria-label="Features">
         <li class="mr-1.5 mt-2">
           <div
             class="flex items-center rounded-full bg-teal-400/10 px-3 py-1 text-xs font-medium leading-5 text-teal-300">
-            Activity Stats
+            Activity Report API
           </div>
         </li>
         <li class="mr-1.5 mt-2">
           <div
             class="flex items-center rounded-full bg-teal-400/10 px-3 py-1 text-xs font-medium leading-5 text-teal-300">
-            Learning Path
+            Learning Path Progress
           </div>
         </li>
         <li class="mr-1.5 mt-2">
@@ -79,68 +80,151 @@
     </div>
     <div class="flex-1">
       <pre class="overflow-x-auto rounded-lg bg-slate-800/50 p-4 text-sm text-slate-300">
-<code>{`// Portfolio-safe mock shapes (not production types)
+<code>{`// Portfolio-safe mocks mirroring the report + path response shapes
 
-type ProgressReport = {
-  childId: string;
+type ProgressStatus = 'not_started' | 'in_progress' | 'completed';
+
+type RecentActivity = {
+  activityId: number;
+  title: string;
+  category: string;
+  imagePath: string;
+  activityType: string;
+  completedAt: string; // Y-m-d H:i:s
+};
+
+type UserReport = {
+  userUuid: string;
   childName: string;
   lifetime: {
     activitiesCompleted: number;
-    pathActivitiesCompleted: number;
+    learningPathActivitiesCompleted: number;
   };
-  last7Days: {
-    startDate: string;
+  // Defaults to last 7 days; optional custom start/end range
+  period: {
+    startDate: string; // Y-m-d
     endDate: string;
     totals: {
       activitiesCompleted: number;
-      pathActivitiesCompleted: number;
+      learningPathActivitiesCompleted: number;
       minutesPlayed: number;
     };
   };
-  recentActivities: Array<{
-    id: string;
-    title: string;
-    category: string;
-    completedAt: string;
-  }>;
+  recentActivities: RecentActivity[]; // capped (e.g. 20)
 };
 
-type LearningPath = {
-  subject: 'reading' | 'math';
-  gradeLabel: string;
+type LessonProgress = {
+  lessonId: string;
+  title: string;
+  status: ProgressStatus;
+};
+
+type UnitSummary = {
+  unitNumber: number;
+  unitId: string;
+  title: string;
+  lessonsCompleted: number;
+  lessonsTotal: number;
+  status: ProgressStatus;
+};
+
+type UnitProgress = {
+  summary: UnitSummary;
+  lessons: LessonProgress[];
+};
+
+type PathProgress = {
+  category: 'reading' | 'math';
+  grade: string;
+  gradeDisplayName: string;
+  gradeDescription: string;
   progressPercent: number;
   lessonsCompleted: number;
   lessonsTotal: number;
-  currentUnit: {
-    unitNumber: number;
-    title: string;
-    lessons: Array<{
-      id: string;
-      title: string;
-      status: 'not_started' | 'in_progress' | 'completed';
-    }>;
-  };
+  unitsCompleted: number;
+  unitsTotal: number;
+  currentUnit: UnitProgress | null;
+  nextUnit: UnitSummary | null;
+  units: UnitProgress[];
 };
 
-const example: ProgressReport = {
-  childId: 'child_01',
+type LearningPathProgress = {
+  userUuid: string;
+  paths: PathProgress[];
+};
+
+const userReport: UserReport = {
+  userUuid: 'child_01',
   childName: 'Alex',
-  lifetime: { activitiesCompleted: 142, pathActivitiesCompleted: 98 },
-  last7Days: {
+  lifetime: {
+    activitiesCompleted: 142,
+    learningPathActivitiesCompleted: 98
+  },
+  period: {
     startDate: '2026-03-10',
     endDate: '2026-03-16',
     totals: {
       activitiesCompleted: 12,
-      pathActivitiesCompleted: 8,
+      learningPathActivitiesCompleted: 8,
       minutesPlayed: 95
     }
   },
   recentActivities: [
     {
-      id: 'act_1',
+      activityId: 1001,
       title: 'Letter Sounds',
       category: 'Reading',
-      completedAt: '2026-03-16T18:20:00Z'
+      imagePath: '/mock/letter-sounds.png',
+      activityType: 'game',
+      completedAt: '2026-03-16 18:20:00'
+    }
+  ]
+};
+
+const learningPath: LearningPathProgress = {
+  userUuid: 'child_01',
+  paths: [
+    {
+      category: 'reading',
+      grade: 'k',
+      gradeDisplayName: 'Kindergarten',
+      gradeDescription: 'Build letter sounds and early reading confidence.',
+      progressPercent: 37.5,
+      lessonsCompleted: 6,
+      lessonsTotal: 16,
+      unitsCompleted: 1,
+      unitsTotal: 4,
+      currentUnit: {
+        summary: {
+          unitNumber: 2,
+          unitId: 'unit_abc',
+          title: 'Short Vowels',
+          lessonsCompleted: 1,
+          lessonsTotal: 4,
+          status: 'in_progress'
+        },
+        lessons: [
+          {
+            lessonId: 'lesson_01',
+            title: 'A as in Apple',
+            status: 'completed'
+          },
+          {
+            lessonId: 'lesson_02',
+            title: 'E as in Egg',
+            status: 'in_progress'
+          }
+        ]
+      },
+      nextUnit: {
+        unitNumber: 3,
+        unitId: 'unit_def',
+        title: 'Blending',
+        lessonsCompleted: 0,
+        lessonsTotal: 4,
+        status: 'not_started'
+      },
+      units: [/* … */]
     }
   ]
 };`}</code></pre>
@@ -357,7 +441,7 @@ class BaseStore<T> {
 }
 
 type ReportState = {
-  report: ProgressReport | null;
+  report: UserReport | null;
   isLoading: boolean;
   error: string | null;
 };
