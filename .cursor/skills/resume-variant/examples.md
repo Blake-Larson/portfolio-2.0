@@ -14,7 +14,7 @@ The scrivy JD emphasized full-stack TypeScript/React, payment integrations, API 
 
 > Software engineer specializing in frontend systems and API integration — connecting complex backend services, payment processors, and native apps to polished, production-grade user experiences.
 
-**Variant (`resumes/scrivy/resume-data.js`):**
+**Variant (`src/lib/resumes/scrivy/resume-data.js`):**
 
 > Full-stack software engineer with 5+ years shipping TypeScript and React products end to end — payment integrations, API design, data querying, and production observability. Ships independently from scoped problem to tested, live feature.
 

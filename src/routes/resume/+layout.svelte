@@ -1,6 +1,15 @@
 <script>
 	import '../../app.css';
+	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
+
+	$: variant = $page.url.searchParams.get('variant');
+	$: downloadHref = variant
+		? `/resume/download?variant=${encodeURIComponent(variant)}`
+		: '/documents/blake-larson-resume.pdf';
+	$: downloadFilename = variant
+		? `blake-larson-resume-${variant}.pdf`
+		: 'blake-larson-resume.pdf';
 
 	onMount(() => {
 		document.documentElement.classList.add('resume-page');
@@ -13,8 +22,8 @@
 		<div class="mb-4 flex items-center justify-between print:hidden">
 			<a href="/" class="text-sm text-neutral-600 hover:text-neutral-900">← Home</a>
 			<a
-				href="/documents/blake-larson-resume.pdf"
-				download="blake-larson-resume.pdf"
+				href={downloadHref}
+				download={downloadFilename}
 				class="inline-flex items-center gap-1.5 rounded-md bg-[#4a7c7c] px-3 py-1.5 text-sm font-medium text-white hover:bg-[#3d6666]">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"

@@ -1,6 +1,26 @@
 export default [
   {
-    date: 'Apr 1, 2024',
+    date: 'Spring 2026',
+    title: 'Parent Center',
+    slug: 'parent-center',
+    url: '',
+    description:
+      'Co-led the technical build of ABCmouse Parent Center — a SvelteKit parent hub for child progress, profiles, and account settings that runs on the web and inside the native app webview. Owned progress reporting, settings navigation, design-system components, store architecture, and automated test coverage.',
+    technologies: ['SvelteKit', 'Svelte 5', 'TypeScript', 'Tailwind CSS', 'Vitest', 'Playwright'],
+    img: { src: '', alt: 'Parent Center', type: 'placeholder' }
+  },
+  {
+    date: 'Oct 2025',
+    title: 'iOS Alternate Payment Flow',
+    slug: 'ios-alternate-payment',
+    url: '',
+    description:
+      "Built both the web and native sides of ABCmouse's iOS/Android alternate payment system — a SvelteKit inbound-gateway that validates deep-linked payloads from native apps (Zod schema, platform/referrer resolution, auth, product-hash translation) and a FlutterAppService that mints short-lived tokens and routes users back via platform-specific deep links or authenticated Flutter web URLs.",
+    technologies: ['SvelteKit', 'Zod', 'TypeScript', 'Flutter', 'Vitest', 'WebdriverIO'],
+    img: { src: '', alt: 'iOS Alternate Payment Flow', type: 'placeholder' }
+  },
+  {
+    date: 'Apr 1, 2025',
     title: 'Loading Service',
     slug: 'loading-service',
     url: '',

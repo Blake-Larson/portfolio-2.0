@@ -81,7 +81,7 @@ export const interests = '...';
 2. **No new employers or roles** — only reword existing experience entries.
 3. **No invented metrics** — reuse numbers from base resume only (e.g. `~30% adoption`).
 4. **New bullets** — only after user confirms experience and approves the drafted text.
-5. **File location** — `resumes/{slug}/resume-data.js` where `{slug}` matches the `--variant` flag and `?variant=` query param.
+5. **File location** — `src/lib/resumes/{slug}/resume-data.js` where `{slug}` matches the `--variant` flag and `?variant=` query param. PDFs are written to `resumes/{slug}/`.
 
 ## Loading and rendering
 
